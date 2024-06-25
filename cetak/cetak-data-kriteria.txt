@@ -1,0 +1,84 @@
+<?php
+require_once('../includes/init.php');
+
+$user_role = get_role();
+if($user_role == 'admin' || $user_role == 'user') {
+	?>	
+
+	<html>
+	<head>
+		<title>Sistem Pendukung Keputusan Metode SAW</title>
+	</head>
+	<body onload="window.print();">
+
+		<div style="width:100%;margin:0 auto;text-align:center;">
+			<h4>Laporan Penerima Bantuan Program Keluarga Harapan (PKH)</h4>
+			<br/>
+			<?php 
+			if ($tahap = $_GET['tahap'] == 1) {
+				$tahap = $_GET['tahap'] = "Januari - Maret";
+			} else if ($tahap = $_GET['tahap'] == 2) {
+				$tahap = $_GET['tahap'] = "April - Juni";
+			} else if ($tahap = $_GET['tahap'] == 3) {
+				$tahap = $_GET['tahap'] = "Juli - September";
+			} else {
+				$tahap = $_GET['tahap'] = "Oktober - Desember";
+			}
+			?>
+			<h4 style="text-align: left!important;">Tahap : <?= $tahap ?></h4>
+			<h4 style="text-align: left!important;">Tahun : <?= $_GET['tahun'] ?></h4>
+			<table width="100%" cellspacing="0" cellpadding="5" border="1">
+				<thead>
+					<tr align="center">
+						<th>No</th>
+						<th>Kode Kriteria</th>
+						<th>Nama Kriteria</th>
+						<th>Type</th>
+						<th>Bobot</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$no = 1;
+					$query = mysqli_query($koneksi,"SELECT * FROM kriteria WHERE tahap = $tahap AND tahun = $tahun ORDER BY kode_kriteria ASC");			
+					while($data = mysqli_fetch_array($query)) :
+						?>
+						<tr align="center">
+							<td><?php echo $no; ?></td>
+							<td><?php echo $data['kode_kriteria']; ?></td>
+							<td align="left"><?php echo $data['nama']; ?></td>
+							<td><?php echo $data['type']; ?></td>
+							<td><?php echo $data['bobot']; ?></td>
+						</tr>
+						<?php 
+						$no++;
+					endwhile; ?>
+				</tbody>
+			</table>
+		</div>
+
+		<table width="100%">
+			<tr>
+				<td></td>
+				<td width="200px">
+					<p style="margin-top: 1cm;">Banjarbaru, 25 Maret 2024 <br> Kepala Kelurahan Kemuning</p>
+					<div style="margin-top: 3cm;">
+						DONY FAJAR SAPUTRA, S. STP., M.Si
+					</div>
+
+				</div>
+
+			</td>
+		</tr>
+	</table>
+</body>
+
+</body>
+</html>
+
+<?php
+}
+else {
+	header('Location: login.php');
+}
+?>
