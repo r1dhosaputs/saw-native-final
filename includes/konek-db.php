@@ -6,7 +6,7 @@
 // 	echo "Koneksi database gagal : " . mysqli_connect_error();
 // }
 
-$database_file = 'Z:\laragon\www\SPK-SAW-NATIVE-ORI\Database\spk-saw.sqlite';
+$database_file = 'Z:\laragon\www\SPK-SAW-NATIVE-FINAL\Database\spk-saw.sqlite';
 
 try {
 	$koneksi = new PDO("sqlite:" . $database_file);
